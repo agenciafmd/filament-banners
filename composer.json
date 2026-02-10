@@ -1,6 +1,7 @@
 {
     "name": "agenciafmd/filament-banners",
     "description": "Filament - Banners",
+    "license": "MIT",
     "authors": [
         {
             "name": "João Paulo dos Santos Ferreira",
