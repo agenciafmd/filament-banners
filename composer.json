@@ -1,0 +1,30 @@
+{
+    "name": "agenciafmd/filament-banners",
+    "description": "Filament - Banners",
+    "authors": [
+        {
+            "name": "João Paulo dos Santos Ferreira",
+            "email": "joao.paulo@fmd.ag",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "agenciafmd/filament-admix": "v1.x-dev|dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agenciafmd\\Banners\\": "src/",
+            "Agenciafmd\\Banners\\Database\\Factories\\": "database/factories/",
+            "Agenciafmd\\Banners\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Banners\\Providers\\BannerServiceProvider"
+            ]
+        }
+    }
+}
