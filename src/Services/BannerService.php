@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Banners\Services;
 
 use Illuminate\Support\Collection;
 
-class BannerService
+final class BannerService
 {
     public static function make(): static
     {

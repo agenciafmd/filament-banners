@@ -12,7 +12,6 @@ use Agenciafmd\Banners\Resources\Banners\Schemas\BannerForm;
 use Agenciafmd\Banners\Resources\Banners\Tables\BannersTable;
 use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;

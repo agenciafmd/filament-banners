@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Banners\Resources\Banners\Pages;
 
 use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
@@ -9,7 +11,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditBanner extends EditRecord
+final class EditBanner extends EditRecord
 {
     use RedirectBack;
 

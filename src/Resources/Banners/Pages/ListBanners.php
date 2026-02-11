@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Banners\Resources\Banners\Pages;
 
 use Agenciafmd\Banners\Resources\Banners\BannerResource;
@@ -8,7 +10,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\ListRecords;
 
-class ListBanners extends ListRecords
+final class ListBanners extends ListRecords
 {
     protected static string $resource = BannerResource::class;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Banners\Models;
 
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
@@ -13,7 +15,7 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 #[UseFactory(BannerFactory::class)]
-class Banner extends Model implements AuditableContract
+final class Banner extends Model implements AuditableContract
 {
     use Auditable, HasFactory, Prunable, SoftDeletes;
 
