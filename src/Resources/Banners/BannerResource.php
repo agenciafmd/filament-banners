@@ -26,6 +26,8 @@ final class BannerResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ComputerDesktop;
 
+    protected static ?int $navigationSort = 4;
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getModelLabel(): string
