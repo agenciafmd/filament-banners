@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Agenciafmd\Articles\Database\Seeders;
+namespace Agenciafmd\Banners\Database\Seeders;
 
 use Agenciafmd\Banners\Models\Banner;
 use Illuminate\Database\Seeder;
@@ -14,6 +14,8 @@ final class BannerSeeder extends Seeder
         Banner::query()
             ->truncate();
 
-        //
+        Banner::factory()
+            ->count(50)
+            ->create();
     }
 }

@@ -70,7 +70,9 @@ final class BannersTable
                     }),
                 SelectFilter::make('location')
                     ->translateLabel()
-                    ->options(new BannerService()->locations()),
+                    ->options(BannerService::make()
+                        ->locations()
+                        ->toArray()),
                 TrashedFilter::make(),
             ])
             ->recordActions([

@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Banners\Models;
 
-use Agenciafmd\Articles\Database\Factories\BannerFactory;
+use Agenciafmd\Banners\Database\Factories\BannerFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

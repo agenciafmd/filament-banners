@@ -20,7 +20,9 @@ class ListBanners extends ListRecords
                 ->schema([
                     Select::make('location')
                         ->translateLabel()
-                        ->options(new BannerService()->locations())
+                        ->options(BannerService::make()
+                            ->locations()
+                            ->toArray())
                         ->required(),
                 ])
                 ->action(function (array $data) {
