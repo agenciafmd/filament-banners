@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('location', 150)
                 ->nullable();
             $table->string('name');
-            $table->string('link', 150)
+            $table->text('link')
                 ->nullable();
             $table->string('target', 30)
                 ->nullable();

@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Banners\Resources\Banners\Schemas;
 
+use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
 use Agenciafmd\Admix\Resources\Forms\Components\VideoUploadWithDefault;
 use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
-use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -35,8 +34,8 @@ final class BannerForm
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
                                 if (($get('slug') ?? '') !== str($old)
-                                        ->slug()
-                                        ->toString()) {
+                                    ->slug()
+                                    ->toString()) {
                                     return;
                                 }
 
@@ -53,18 +52,21 @@ final class BannerForm
                             ->unique()
                             ->required(),
                         ImageUploadWithDefault::make(name: 'desktop', directory: 'banner/desktop')
+                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.desktop.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.desktop.height", 1080))
                             ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.ratio", ['16:9']))
                             ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.width", 1920))
                             ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.height", 1080))
                             ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.visible", false))
                             ->required(),
                         ImageUploadWithDefault::make(name: 'notebook', directory: 'banner/notebook')
+                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.notebook.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.notebook.height", 1080))
                             ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.ratio", ['16:9']))
                             ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.width", 1920))
                             ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.height", 1080))
                             ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.visible", false))
                             ->required(),
                         ImageUploadWithDefault::make(name: 'mobile', directory: 'banner/mobile')
+                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.mobile.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.mobile.height", 1080))
                             ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.ratio", ['9:16']))
                             ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.width", 1920))
                             ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.height", 1080))
@@ -93,13 +95,10 @@ final class BannerForm
                         Toggle::make('star')
                             ->translateLabel()
                             ->default(false),
-                        Group::make([
-                            DateTimePicker::make('published_at')
-                                ->translateLabel(),
-                            DateTimePicker::make('until_then')
-                                ->translateLabel(),
-                        ])
-                            ->columnSpanFull(),
+                        DateTimePicker::make('published_at')
+                            ->translateLabel(),
+                        DateTimePicker::make('until_then')
+                            ->translateLabel(),
                         DateTimeEntry::make('created_at'),
                         DateTimeEntry::make('updated_at'),
                         TextEntry::make('location')
