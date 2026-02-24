@@ -15,6 +15,8 @@ final class BannerServiceProvider extends ServiceProvider
         $this->bootMigrations();
 
         $this->bootTranslations();
+
+        $this->bootPublish();
     }
 
     public function register(): void
@@ -25,6 +27,13 @@ final class BannerServiceProvider extends ServiceProvider
     private function bootProviders(): void
     {
         //
+    }
+
+    private function bootPublish(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../../config/filament-banners.php' => base_path('config/filament-banners.php'),
+        ], 'filament-banners:config');
     }
 
     private function bootMigrations(): void

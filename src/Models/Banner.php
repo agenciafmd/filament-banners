@@ -30,6 +30,7 @@ final class Banner extends Model implements AuditableContract
         return [
             'is_active' => 'boolean',
             'star' => 'boolean',
+            'meta' => 'array',
             'published_at' => 'timestamp',
             'until_then' => 'timestamp',
         ];

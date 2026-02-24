@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('location', 150)
                 ->nullable();
             $table->string('name');
+            $table->json('meta')
+                ->nullable();
             $table->text('link')
                 ->nullable();
             $table->string('target', 30)

@@ -36,34 +36,38 @@ return [
                     'visible' => true,
                 ],
             ],
-            //            'meta' =>  [
-            //                [
-            //                    'label' => 'tipo',
-            //                    'name' => 'type',
-            //                    'options' => [
-            //                        [
-            //                            'value' => '',
-            //                            'label' => '-',
-            //                        ],
-            //                        [
-            //                            'value' => 'Plantas Baixas',
-            //                            'label' => 'Plantas Baixas',
-            //                        ],
-            //                        [
-            //                            'value' => 'Implantações',
-            //                            'label' => 'Implantações',
-            //                        ]
-            //                    ],
-            //                ],
-            //                [
-            //                    'label' => 'título',
-            //                    'name' => 'title',
-            //                ],
-            //                [
-            //                    'label' => 'subtítulo',
-            //                    'name' => 'subtitle',
-            //                ],
-            //            ]
+            'meta' => [
+                //                [
+                //                    'type' => Meta::TEXT,
+                //                    'label' => 'Título',
+                //                    'name' => 'title',
+                //                ],
+                //                [
+                //                    'type' => Meta::TEXT,
+                //                    'label' => 'Subtítulo',
+                //                    'name' => 'subtitle',
+                //                ],
+                //                [
+                //                    'type' => Meta::TEXT,
+                //                    'label' => 'Descrição',
+                //                    'name' => 'description',
+                //                ],
+                //                [
+                //                    'type' => Meta::SELECT,
+                //                    'label' => 'Status',
+                //                    'name' => 'status',
+                //                    'options' => [
+                //                        'breve-lancamento' => 'Breve lançamento',
+                //                        'em-obras' => 'Em obras',
+                //                        'pronto' => 'Pronto',
+                //                    ],
+                //                ],
+                //                [
+                //                    'type' => Meta::REPEATER,
+                //                    'label' => 'Detalhes',
+                //                    'name' => 'details',
+                //                ],
+            ],
         ],
     ],
 ];

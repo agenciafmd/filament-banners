@@ -7,8 +7,11 @@ namespace Agenciafmd\Banners\Resources\Banners\Schemas;
 use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
 use Agenciafmd\Admix\Resources\Forms\Components\VideoUploadWithDefault;
 use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
+use Agenciafmd\Banners\Enums\Meta;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -27,8 +30,7 @@ final class BannerForm
             ->components([
                 Section::make(__('General'))
                     ->schema([
-                        Hidden::make('location')
-                            ->live(),
+                        Hidden::make('location'),
                         TextInput::make('name')
                             ->translateLabel()
                             ->live(onBlur: true)
@@ -83,6 +85,38 @@ final class BannerForm
                                 '_self' => __('_self'),
                                 '_blank' => __('_blank'),
                             ]),
+                        Section::make(__('Additional fields'))
+                            ->statePath('meta')
+                            ->schema(function (Get $get) {
+                                return collect(config("filament-banners.locations.{$get('location')}.meta", []))
+                                    ->map(function ($field) {
+                                        return match ($field['type']) {
+                                            Meta::TEXT => TextInput::make($field['name'])
+                                                ->label($field['label']),
+                                            Meta::SELECT => Select::make($field['name'])
+                                                ->label($field['label'])
+                                                ->options($field['options'] ?? []),
+                                            Meta::REPEATER => Repeater::make($field['name'])
+                                                ->label($field['label'])
+                                                ->table([
+                                                    TableColumn::make($field['label']),
+                                                ])
+                                                ->schema([
+                                                    TextInput::make('name')
+                                                        ->label($field['label'])
+                                                        ->required(),
+                                                ])
+                                                ->compact()
+                                                ->columnSpanFull(),
+                                        };
+                                    })
+                                    ->toArray();
+                            })
+                            ->collapsible()
+                            ->columns()
+                            ->columnSpanFull()
+                            ->live()
+                            ->visible(fn(Get $get) => config("filament-banners.locations.{$get('location')}.meta", false)),
                     ])
                     ->collapsible()
                     ->columns()

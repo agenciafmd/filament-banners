@@ -18,12 +18,8 @@ final class CreateBanner extends CreateRecord
     {
         parent::mount();
 
-        $location = request()->query('location') ?? 'home';
-
-        if ($location) {
-            $this->form->fill([
-                'location' => $location,
-            ]);
-        }
+        $this->form->fill([
+            'location' => request()->query('location', 'home'),
+        ]);
     }
 }
