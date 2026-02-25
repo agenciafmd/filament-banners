@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Banners\Database\Factories;
 
+use Agenciafmd\Banners\Enums\Meta;
 use Agenciafmd\Banners\Services\BannerService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,28 @@ final class BannerFactory extends Factory
             'desktop' => config("{$config}.desktop.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.desktop.ratio")[0])) : null,
             'notebook' => config("{$config}.notebook.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.notebook.ratio")[0])) : null,
             'mobile' => config("{$config}.mobile.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.mobile.ratio")[0])) : null,
+            'meta' => $this->meta($location),
             'slug' => $slug,
         ];
+    }
+
+    private function meta(string $location): array
+    {
+        return collect(config("filament-banners.locations.{$location}.meta", []))
+            ->mapWithKeys(function ($field) {
+                $value = match ($field['type']) {
+                    Meta::TEXT => fake()->sentence(),
+                    Meta::SELECT => fake()->randomElement(array_keys($field['options'] ?? [])),
+                    Meta::REPEATER => collect(range(1, fake()->numberBetween(1, 3)))
+                        ->map(fn() => [
+                            'name' => fake()->word(),
+                        ])
+                        ->toArray(),
+                    default => null,
+                };
+
+                return [$field['name'] => $value];
+            })
+            ->toArray();
     }
 }
