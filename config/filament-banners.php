@@ -15,6 +15,7 @@ return [
                     'ratio' => [
                         '16:9',
                     ],
+                    'media' => '(min-width: 1400px)',
                 ],
                 'notebook' => [
                     'visible' => true,
@@ -23,6 +24,7 @@ return [
                     'ratio' => [
                         '16:9',
                     ],
+                    'media' => '(min-width: 768px)',
                 ],
                 'mobile' => [
                     'visible' => true,
@@ -31,6 +33,7 @@ return [
                     'ratio' => [
                         '9:16',
                     ],
+                    'media' => '(max-width: 767px)',
                 ],
                 'video' => [
                     'visible' => true,
