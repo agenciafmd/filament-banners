@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Agenciafmd\Banners\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Override;
 
 final class BannerServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,7 @@ final class BannerServiceProvider extends ServiceProvider
         $this->bootPublish();
     }
 
+    #[Override]
     public function register(): void
     {
         $this->registerConfigs();
@@ -26,7 +28,7 @@ final class BannerServiceProvider extends ServiceProvider
 
     private function bootProviders(): void
     {
-        //
+        $this->app->register(BladeServiceProvider::class);
     }
 
     private function bootPublish(): void
