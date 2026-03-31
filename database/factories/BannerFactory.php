@@ -18,8 +18,8 @@ final class BannerFactory extends Factory
         $location = fake()->randomElement(BannerService::make()
             ->locations()
             ->keys()
-            ->toArray());
-        $config = "filament-banners.locations.{$location}.files";
+            ->all());
+        $config = sprintf('filament-banners.locations.%s.files', $location);
 
         return [
             'is_active' => fake()->boolean(),
@@ -30,9 +30,9 @@ final class BannerFactory extends Factory
             'until_then' => fake()->dateTimeBetween(now()->subDay(), now()->addMonths(6)),
             'link' => fake()->url(),
             'target' => '_blank',
-            'desktop' => config("{$config}.desktop.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.desktop.ratio")[0])) : null,
-            'notebook' => config("{$config}.notebook.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.notebook.ratio")[0])) : null,
-            'mobile' => config("{$config}.mobile.visible") ? Storage::putFile('fake', fake()->localImage(ratio: config("{$config}.mobile.ratio")[0])) : null,
+            'desktop' => config($config . '.desktop.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.desktop.ratio')[0])) : null,
+            'notebook' => config($config . '.notebook.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.notebook.ratio')[0])) : null,
+            'mobile' => config($config . '.mobile.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.mobile.ratio')[0])) : null,
             'meta' => $this->meta($location),
             'slug' => $slug,
         ];
@@ -40,16 +40,16 @@ final class BannerFactory extends Factory
 
     private function meta(string $location): array
     {
-        return collect(config("filament-banners.locations.{$location}.meta", []))
-            ->mapWithKeys(function ($field) {
+        return collect(config(sprintf('filament-banners.locations.%s.meta', $location), []))
+            ->mapWithKeys(static function (array $field): array {
                 $value = match ($field['type']) {
                     Meta::TEXT => fake()->sentence(),
                     Meta::SELECT => fake()->randomElement(array_keys($field['options'] ?? [])),
                     Meta::REPEATER => collect(range(1, fake()->numberBetween(1, 3)))
-                        ->map(fn() => [
+                        ->map(static fn (): array => [
                             'name' => fake()->word(),
                         ])
-                        ->toArray(),
+                        ->all(),
                     default => null,
                 };
 

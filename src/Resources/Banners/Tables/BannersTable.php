@@ -57,17 +57,15 @@ final class BannersTable
                         DateTimePicker::make('until_then')
                             ->translateLabel(),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['published_at'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['until_then'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('until_then', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['published_at'],
+                            static fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['until_then'],
+                            static fn (Builder $query, $date): Builder => $query->whereDate('until_then', '<=', $date),
+                        )),
                 SelectFilter::make('location')
                     ->translateLabel()
                     ->options(BannerService::make()
@@ -85,11 +83,9 @@ final class BannersTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->defaultSort(function (Builder $query): Builder {
-                return $query->orderBy('is_active', 'desc')
-                    ->orderBy('star', 'desc')
-                    ->orderBy('published_at', 'desc')
-                    ->orderBy('name');
-            });
+            ->defaultSort(fn (Builder $query): Builder => $query->orderBy('is_active', 'desc')
+                ->orderBy('star', 'desc')
+                ->latest('published_at')
+                ->orderBy('name'));
     }
 }

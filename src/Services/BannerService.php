@@ -18,6 +18,6 @@ final class BannerService
         $locations = config('filament-banners.locations');
 
         return collect($locations)
-            ->flatMap(fn ($location, $key) => [$key => $location['label']]);
+            ->flatMap(static fn ($location, $key): array => [$key => $location['label']]);
     }
 }

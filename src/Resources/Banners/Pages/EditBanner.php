@@ -10,6 +10,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditBanner extends EditRecord
 {
@@ -21,6 +22,7 @@ final class EditBanner extends EditRecord
         'auditRestored',
     ];
 
+    #[Override]
     public function getRelationManagers(): array
     {
         if ($this->record->trashed()) {
@@ -35,6 +37,7 @@ final class EditBanner extends EditRecord
         $this->fillForm();
     }
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -9,11 +9,13 @@ use Agenciafmd\Banners\Services\BannerService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\ListRecords;
+use Override;
 
 final class ListBanners extends ListRecords
 {
     protected static string $resource = BannerResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -27,11 +29,9 @@ final class ListBanners extends ListRecords
                             ->toArray())
                         ->required(),
                 ])
-                ->action(function (array $data) {
-                    return redirect()->to(
-                        BannerResource::getUrl('create', ['location' => $data['location']])
-                    );
-                })
+                ->action(fn (array $data) => redirect()->to(
+                    BannerResource::getUrl('create', ['location' => $data['location']])
+                ))
                 ->modalSubmitActionLabel('Continuar')
                 ->modalWidth('lg'),
         ];

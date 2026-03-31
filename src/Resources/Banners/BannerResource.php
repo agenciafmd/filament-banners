@@ -17,6 +17,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Override;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 final class BannerResource extends Resource
@@ -29,26 +30,31 @@ final class BannerResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    #[Override]
     public static function getModelLabel(): string
     {
         return __('Banner');
     }
 
+    #[Override]
     public static function getPluralModelLabel(): string
     {
         return __('Banners');
     }
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return BannerForm::configure($schema);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return BannersTable::configure($table);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -56,6 +62,7 @@ final class BannerResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [
@@ -65,6 +72,7 @@ final class BannerResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

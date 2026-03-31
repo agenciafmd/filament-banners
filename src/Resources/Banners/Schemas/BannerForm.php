@@ -34,7 +34,7 @@ final class BannerForm
                         TextInput::make('name')
                             ->translateLabel()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                            ->afterStateUpdated(static function (Get $get, Set $set, ?string $old, ?string $state): void {
                                 if (($get('slug') ?? '') !== str($old)
                                     ->slug()
                                     ->toString()) {
@@ -54,28 +54,28 @@ final class BannerForm
                             ->unique()
                             ->required(),
                         ImageUploadWithDefault::make(name: 'desktop', directory: 'banner/desktop')
-                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.desktop.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.desktop.height", 1080))
-                            ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.ratio", ['16:9']))
-                            ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.width", 1920))
-                            ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.height", 1080))
-                            ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.desktop.visible", false))
+                            ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 1920) . 'x' . config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 1080))
+                            ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.ratio', $get('location')), ['16:9']))
+                            ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 1920))
+                            ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 1080))
+                            ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.visible', $get('location')), false))
                             ->required(),
                         ImageUploadWithDefault::make(name: 'notebook', directory: 'banner/notebook')
-                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.notebook.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.notebook.height", 1080))
-                            ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.ratio", ['16:9']))
-                            ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.width", 1920))
-                            ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.height", 1080))
-                            ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.notebook.visible", false))
+                            ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1920) . 'x' . config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 1080))
+                            ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.ratio', $get('location')), ['16:9']))
+                            ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1920))
+                            ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 1080))
+                            ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.visible', $get('location')), false))
                             ->required(),
                         ImageUploadWithDefault::make(name: 'mobile', directory: 'banner/mobile')
-                            ->afterLabel(fn (Get $get) => 'Max. ' . config("filament-banners.locations.{$get('location')}.files.mobile.width", 1920) . 'x' . config("filament-banners.locations.{$get('location')}.files.mobile.height", 1080))
-                            ->imageEditorAspectRatioOptions(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.ratio", ['9:16']))
-                            ->imageEditorViewportWidth(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.width", 1920))
-                            ->imageEditorViewportHeight(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.height", 1080))
-                            ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.mobile.visible", false))
+                            ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 1920) . 'x' . config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 1080))
+                            ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.ratio', $get('location')), ['9:16']))
+                            ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 1920))
+                            ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 1080))
+                            ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.visible', $get('location')), false))
                             ->required(),
                         VideoUploadWithDefault::make(name: 'video', directory: 'banner/video')
-                            ->visible(fn (Get $get) => config("filament-banners.locations.{$get('location')}.files.video.visible", false)),
+                            ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.video.visible', $get('location')), false)),
                         TextInput::make('link')
                             ->translateLabel()
                             ->url(),
@@ -87,36 +87,32 @@ final class BannerForm
                             ]),
                         Section::make(__('Additional fields'))
                             ->statePath('meta')
-                            ->schema(function (Get $get) {
-                                return collect(config("filament-banners.locations.{$get('location')}.meta", []))
-                                    ->map(function ($field) {
-                                        return match ($field['type']) {
-                                            Meta::TEXT => TextInput::make($field['name'])
-                                                ->label($field['label']),
-                                            Meta::SELECT => Select::make($field['name'])
+                            ->schema(fn (Get $get) => collect(config(sprintf('filament-banners.locations.%s.meta', $get('location')), []))
+                                ->map(fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
+                                    Meta::TEXT => TextInput::make($field['name'])
+                                        ->label($field['label']),
+                                    Meta::SELECT => Select::make($field['name'])
+                                        ->label($field['label'])
+                                        ->options($field['options'] ?? []),
+                                    Meta::REPEATER => Repeater::make($field['name'])
+                                        ->label($field['label'])
+                                        ->table([
+                                            TableColumn::make($field['label']),
+                                        ])
+                                        ->schema([
+                                            TextInput::make('name')
                                                 ->label($field['label'])
-                                                ->options($field['options'] ?? []),
-                                            Meta::REPEATER => Repeater::make($field['name'])
-                                                ->label($field['label'])
-                                                ->table([
-                                                    TableColumn::make($field['label']),
-                                                ])
-                                                ->schema([
-                                                    TextInput::make('name')
-                                                        ->label($field['label'])
-                                                        ->required(),
-                                                ])
-                                                ->compact()
-                                                ->columnSpanFull(),
-                                        };
-                                    })
-                                    ->toArray();
-                            })
+                                                ->required(),
+                                        ])
+                                        ->compact()
+                                        ->columnSpanFull(),
+                                })
+                                ->toArray())
                             ->collapsible()
                             ->columns()
                             ->columnSpanFull()
                             ->live()
-                            ->visible(fn(Get $get) => config("filament-banners.locations.{$get('location')}.meta", false)),
+                            ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.meta', $get('location')), false)),
                     ])
                     ->collapsible()
                     ->columns()
@@ -137,7 +133,7 @@ final class BannerForm
                         DateTimeEntry::make('updated_at'),
                         TextEntry::make('location')
                             ->translateLabel()
-                            ->formatStateUsing(fn ($state) => config("filament-banners.locations.{$state}.label"))
+                            ->formatStateUsing(static fn (string $state) => config(sprintf('filament-banners.locations.%s.label', $state)))
                             ->hiddenOn(Operation::Create),
                     ])
                     ->collapsible()

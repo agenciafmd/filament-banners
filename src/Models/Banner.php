@@ -11,13 +11,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 #[UseFactory(BannerFactory::class)]
 final class Banner extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, Prunable, SoftDeletes;
+    use Auditable;
+    use HasFactory;
+    use Prunable;
+    use SoftDeletes;
 
     public function prunable(): Builder
     {
@@ -25,6 +29,7 @@ final class Banner extends Model implements AuditableContract
             ->where('deleted_at', '<=', now()->subDays(30));
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
