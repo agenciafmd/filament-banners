@@ -11,7 +11,12 @@ use Illuminate\View\Component;
 
 final class Banner extends Component
 {
-    public function __construct(public int $quantity = 3, public string $location = 'home', public bool $random = false) {}
+    public function __construct(
+        public int $quantity = 3,
+        public string $location = 'home',
+        public bool $random = false,
+        public string $template = 'filament-banners::components.home',
+    ) {}
 
     public function render(): View
     {
@@ -55,6 +60,6 @@ final class Banner extends Component
             ];
         });
 
-        return view('filament-banners::components.home', $view);
+        return view($this->template, $view);
     }
 }
