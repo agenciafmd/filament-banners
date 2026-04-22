@@ -14,7 +14,7 @@ final class BannerFactory extends Factory
     public function definition(): array
     {
         $name = fake()->sentence(4);
-        $slug = str()->slug($name);
+        $slug = str($name)->slug();
         $location = fake()->randomElement(BannerService::make()
             ->locations()
             ->keys()
