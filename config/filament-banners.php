@@ -10,8 +10,9 @@ return [
             'files' => [
                 'desktop' => [
                     'visible' => true,
-                    'width' => 1920,
-                    'height' => 1080,
+                    'resize' => true,
+                    'width' => 3840,
+                    'height' => 2160,
                     'ratio' => [
                         '16:9',
                     ],
@@ -19,6 +20,7 @@ return [
                 ],
                 'notebook' => [
                     'visible' => true,
+                    'resize' => true,
                     'width' => 1920,
                     'height' => 1080,
                     'ratio' => [
@@ -28,6 +30,7 @@ return [
                 ],
                 'mobile' => [
                     'visible' => true,
+                    'resize' => true,
                     'width' => 720,
                     'height' => 1280,
                     'ratio' => [
@@ -36,7 +39,7 @@ return [
                     'media' => '(max-width: 767px)',
                 ],
                 'video' => [
-                    'visible' => true,
+                    'visible' => false,
                 ],
             ],
             'meta' => [
