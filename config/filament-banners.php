@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
     'name' => 'Banners',
+    'navigation_group' => null,
+    'navigation_sort' => 5,
     'locations' => [
         'home' => [
             'label' => 'Home',

@@ -26,8 +26,6 @@ final class BannerResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedComputerDesktop;
 
-    protected static ?int $navigationSort = 5;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]
@@ -40,6 +38,16 @@ final class BannerResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('Banners');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-banners.navigation_sort');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-banners.navigation_group');
     }
 
     #[Override]
