@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Agenciafmd\Banners\Models;
 
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,20 @@ final class Banner extends Model implements AuditableContract
     {
         return self::query()
             ->where('deleted_at', '<=', now()->subDays(30));
+    }
+
+    #[Scope]
+    protected function isActive(Builder $query): void
+    {
+        $query->where('is_active', true)
+            ->where(function ($query): void {
+                $query->where('published_at', '<=', now())
+                    ->orWhereNull('published_at');
+            })
+            ->where(function ($query): void {
+                $query->where('until_then', '>=', now())
+                    ->orWhereNull('until_then');
+            });
     }
 
     #[Override]
