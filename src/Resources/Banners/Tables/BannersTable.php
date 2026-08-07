@@ -38,6 +38,10 @@ final class BannersTable
                     ->translateLabel()
                     ->dateTime(config('filament-admix.timestamp.format'))
                     ->sortable(),
+                TextColumn::make('location')
+                    ->translateLabel()
+                    ->formatStateUsing(fn (string $state): string => config('filament-banners.locations.' . $state . '.label', ucfirst($state)))
+                    ->sortable(),
                 ToggleColumn::make('star')
                     ->translateLabel()
                     ->sortable(),
