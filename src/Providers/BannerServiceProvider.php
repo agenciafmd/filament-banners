@@ -29,6 +29,7 @@ final class BannerServiceProvider extends ServiceProvider
     private function bootProviders(): void
     {
         $this->app->register(BladeServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
     }
 
     private function bootPublish(): void
