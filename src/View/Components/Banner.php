@@ -22,32 +22,36 @@ final class Banner extends Component
     {
         $query = BannerModel::query()
             ->where('location', $this->location)
-            ->where('is_active', true);
+            ->isActive();
 
         if ($this->random) {
             $query->inRandomOrder();
         } else {
-            $query->orderBy('is_active', 'desc')
-                ->orderBy('star', 'desc')
-                ->latest('published_at')
-                ->orderBy('name');
+            $query->sort();
         }
 
         $banners = $query->take($this->quantity)
             ->get();
 
-        $view['banners'] = $banners->map(function ($banner): array {
-            $files = config(sprintf('filament-banners.locations.%s.files', $this->location));
+        $files = config(sprintf('filament-banners.locations.%s.files', $this->location), []);
+
+        $view['banners'] = $banners->map(function (BannerModel $banner) use ($files): array {
+            $responsiveImages = [];
+            $video = null;
+
             foreach ($files as $fileKey => $file) {
-                $collection = $fileKey;
-                $media = Storage::url($banner->$fileKey);
-                if ($collection !== 'video') {
-                    $responsiveImages[$file['media']] = $media;
+                if (! ($file['visible'] ?? true) || ! $banner->{$fileKey}) {
+                    continue;
                 }
 
-                if ($collection === 'video') {
+                $media = Storage::url($banner->{$fileKey});
+                if ($fileKey === 'video') {
                     $video = $media;
+
+                    continue;
                 }
+
+                $responsiveImages[$file['media']] = $media;
             }
 
             return [
@@ -55,8 +59,8 @@ final class Banner extends Component
                 'meta' => $banner->meta,
                 'link' => $banner->link,
                 'target' => $banner->target,
-                'images' => $responsiveImages ?? null,
-                'video' => $video ?? null,
+                'images' => $responsiveImages,
+                'video' => $video,
             ];
         });
 

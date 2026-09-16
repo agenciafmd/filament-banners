@@ -64,17 +64,17 @@ final class BannersTable
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
                             $data['published_at'],
-                            static fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                            static fn (Builder $query, string $date): Builder => $query->whereDate('published_at', '>=', $date),
                         )
                         ->when(
                             $data['until_then'],
-                            static fn (Builder $query, $date): Builder => $query->whereDate('until_then', '<=', $date),
+                            static fn (Builder $query, string $date): Builder => $query->whereDate('until_then', '<=', $date),
                         )),
                 SelectFilter::make('location')
                     ->translateLabel()
                     ->options(BannerService::make()
                         ->locations()
-                        ->toArray()),
+                        ->all()),
                 TrashedFilter::make(),
             ])
             ->recordActions([

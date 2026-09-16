@@ -7,6 +7,7 @@ namespace Agenciafmd\Banners\Providers;
 use Agenciafmd\Banners\View\Components\Banner;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 use Override;
 
 final class BladeServiceProvider extends ServiceProvider
@@ -33,7 +34,10 @@ final class BladeServiceProvider extends ServiceProvider
     private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Banners\\View\\Components', 'filament-banners');
-        Blade::aliasComponent(Banner::class, 'banner');
+
+        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade): void {
+            $blade->component(Banner::class, 'banner');
+        });
     }
 
     private function bootBladeComposers(): void

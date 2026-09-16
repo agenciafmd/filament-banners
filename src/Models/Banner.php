@@ -43,11 +43,11 @@ final class Banner extends Model implements AuditableContract
     protected function isActive(Builder $query): void
     {
         $query->where('is_active', true)
-            ->where(function ($query): void {
+            ->where(function (Builder $query): void {
                 $query->where('published_at', '<=', now())
                     ->orWhereNull('published_at');
             })
-            ->where(function ($query): void {
+            ->where(function (Builder $query): void {
                 $query->where('until_then', '>=', now())
                     ->orWhereNull('until_then');
             });
