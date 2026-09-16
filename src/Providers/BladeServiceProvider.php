@@ -33,7 +33,7 @@ final class BladeServiceProvider extends ServiceProvider
     private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Banners\\View\\Components', 'filament-banners');
-        Blade::component('banner', Banner::class);
+        Blade::aliasComponent(Banner::class, 'banner');
     }
 
     private function bootBladeComposers(): void

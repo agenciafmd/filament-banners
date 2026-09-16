@@ -10,7 +10,7 @@ final class BannerService
 {
     public static function make(): static
     {
-        return app(self::class);
+        return resolve(self::class);
     }
 
     public function locations(): Collection

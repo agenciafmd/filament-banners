@@ -12,7 +12,7 @@ final class BannersPlugin implements Plugin
 {
     public static function make(): static
     {
-        return app(self::class);
+        return resolve(self::class);
     }
 
     public function getId(): string
