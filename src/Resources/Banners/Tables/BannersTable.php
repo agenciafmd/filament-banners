@@ -87,9 +87,6 @@ final class BannersTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->defaultSort(fn (Builder $query): Builder => $query->orderBy('is_active', 'desc')
-                ->orderBy('star', 'desc')
-                ->latest('published_at')
-                ->orderBy('name'));
+            ->defaultSort(fn (Builder $query): Builder => $query->sort());
     }
 }

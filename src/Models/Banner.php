@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Banners\Models;
 
+use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Banners\Database\Factories\BannerFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
@@ -23,6 +24,14 @@ final class Banner extends Model implements AuditableContract
     use HasFactory;
     use Prunable;
     use SoftDeletes;
+    use WithScopes;
+
+    protected array $defaultSort = [
+        'is_active' => 'desc',
+        'star' => 'desc',
+        'published_at' => 'desc',
+        'name' => 'asc',
+    ];
 
     public function prunable(): Builder
     {
