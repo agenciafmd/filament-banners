@@ -13,8 +13,8 @@ return [
                 'desktop' => [
                     'visible' => true,
                     'resize' => true,
-                    'width' => 3840,
-                    'height' => 2160,
+                    'width' => 1920,
+                    'height' => 1080,
                     'ratio' => [
                         '16:9',
                     ],
@@ -23,8 +23,8 @@ return [
                 'notebook' => [
                     'visible' => true,
                     'resize' => true,
-                    'width' => 1920,
-                    'height' => 1080,
+                    'width' => 1440,
+                    'height' => 810,
                     'ratio' => [
                         '16:9',
                     ],
