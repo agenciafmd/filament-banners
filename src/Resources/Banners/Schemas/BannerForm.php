@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Banners\Resources\Banners\Schemas;
 
+use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithAutomaticallyResize;
 use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
 use Agenciafmd\Admix\Resources\Forms\Components\VideoUploadWithDefault;
 use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
@@ -46,31 +47,28 @@ final class BannerForm
                                         ->translateLabel()
                                         ->unique()
                                         ->required(),
-                                    ImageUploadWithDefault::make(name: 'desktop', directory: 'banner/desktop')
-                                        ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 3840) . 'x' . config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 2160))
-                                        ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.ratio', $get('location')), ['16:9']))
-                                        ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 3840))
-                                        ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 2160))
-                                        ->maxImageWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 3840) : null)
-                                        ->maxImageHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 2160) : null)
+                                    ImageUploadWithAutomaticallyResize::make(
+                                        name: 'desktop',
+                                        directory: 'banner/desktop',
+                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 1920),
+                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 1080),
+                                    )
                                         ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.visible', $get('location')), false))
                                         ->required(),
-                                    ImageUploadWithDefault::make(name: 'notebook', directory: 'banner/notebook')
-                                        ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1920) . 'x' . config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 1080))
-                                        ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.ratio', $get('location')), ['16:9']))
-                                        ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1920))
-                                        ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 1080))
-                                        ->maxImageWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1920) : null)
-                                        ->maxImageHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 1080) : null)
+                                    ImageUploadWithAutomaticallyResize::make(
+                                        name: 'notebook',
+                                        directory: 'banner/notebook',
+                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1440),
+                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 810),
+                                    )
                                         ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.visible', $get('location')), false))
                                         ->required(),
-                                    ImageUploadWithDefault::make(name: 'mobile', directory: 'banner/mobile')
-                                        ->afterLabel(static fn (Get $get): string => 'Max. ' . config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 720) . 'x' . config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 1280))
-                                        ->imageEditorAspectRatioOptions(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.ratio', $get('location')), ['9:16']))
-                                        ->imageEditorViewportWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 720))
-                                        ->imageEditorViewportHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 1280))
-                                        ->maxImageWidth(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 720) : null)
-                                        ->maxImageHeight(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.resize', $get('location'))) ? config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 1280) : null)
+                                    ImageUploadWithAutomaticallyResize::make(
+                                        name: 'mobile',
+                                        directory: 'banner/mobile',
+                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 1440),
+                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 810),
+                                    )
                                         ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.visible', $get('location')), false))
                                         ->required(),
                                     VideoUploadWithDefault::make(name: 'video', directory: 'banner/video')

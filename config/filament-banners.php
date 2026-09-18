@@ -12,32 +12,20 @@ return [
             'files' => [
                 'desktop' => [
                     'visible' => true,
-                    'resize' => true,
                     'width' => 1920,
                     'height' => 1080,
-                    'ratio' => [
-                        '16:9',
-                    ],
                     'media' => '(min-width: 1400px)',
                 ],
                 'notebook' => [
                     'visible' => true,
-                    'resize' => true,
                     'width' => 1440,
                     'height' => 810,
-                    'ratio' => [
-                        '16:9',
-                    ],
                     'media' => '(min-width: 768px)',
                 ],
                 'mobile' => [
                     'visible' => true,
-                    'resize' => true,
                     'width' => 720,
                     'height' => 1280,
-                    'ratio' => [
-                        '9:16',
-                    ],
                     'media' => '(max-width: 767px)',
                 ],
                 'video' => [

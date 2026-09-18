@@ -53,7 +53,6 @@ Cada localização pode ter configurações específicas de imagens e campos ext
                 'visible' => true,
                 'width' => 1920,
                 'height' => 1080,
-                'ratio' => ['16:9'],
                 'media' => '(min-width: 1400px)',
             ],
             // ... outras resoluções
