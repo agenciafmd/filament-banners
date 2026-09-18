@@ -30,9 +30,9 @@ final class BannerFactory extends Factory
             'until_then' => fake()->dateTimeBetween(now()->subDay(), now()->addMonths(6)),
             'link' => fake()->url(),
             'target' => '_blank',
-            'desktop' => config($config . '.desktop.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.desktop.ratio')[0])) : null,
-            'notebook' => config($config . '.notebook.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.notebook.ratio')[0])) : null,
-            'mobile' => config($config . '.mobile.visible') ? Storage::putFile('fake', fake()->localImage(ratio: config($config . '.mobile.ratio')[0])) : null,
+            'desktop' => config($config . '.desktop.visible') ? Storage::putFile('fake', fake()->localImage(ratio: '16:9')) : null,
+            'notebook' => config($config . '.notebook.visible') ? Storage::putFile('fake', fake()->localImage(ratio: '16:9')) : null,
+            'mobile' => config($config . '.mobile.visible') ? Storage::putFile('fake', fake()->localImage(ratio: '9:16')) : null,
             'meta' => $this->meta($location),
             'slug' => $slug,
         ];
