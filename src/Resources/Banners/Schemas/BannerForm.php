@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Agenciafmd\Banners\Resources\Banners\Schemas;
 
 use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithAutomaticallyResize;
-use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
 use Agenciafmd\Admix\Resources\Forms\Components\VideoUploadWithDefault;
 use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
 use Agenciafmd\Banners\Enums\Meta;
