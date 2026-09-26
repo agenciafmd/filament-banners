@@ -32,15 +32,15 @@ final class BannersTable
                     ->searchable(),
                 TextColumn::make('published_at')
                     ->translateLabel()
-                    ->dateTime(config('filament-admix.timestamp.format'))
+                    ->dateTime(config()->string('filament-admix.timestamp.format', 'd/m/Y H:i:s'))
                     ->sortable(),
                 TextColumn::make('until_then')
                     ->translateLabel()
-                    ->dateTime(config('filament-admix.timestamp.format'))
+                    ->dateTime(config()->string('filament-admix.timestamp.format', 'd/m/Y H:i:s'))
                     ->sortable(),
                 TextColumn::make('location')
                     ->translateLabel()
-                    ->formatStateUsing(fn (string $state): string => config('filament-banners.locations.' . $state . '.label', ucfirst($state)))
+                    ->formatStateUsing(static fn (string $state): string => BannerService::make()->locations()->get($state, ucfirst($state)))
                     ->sortable(),
                 ToggleColumn::make('star')
                     ->translateLabel()
@@ -63,11 +63,11 @@ final class BannersTable
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
-                            $data['published_at'],
+                            self::date($data, 'published_at'),
                             static fn (Builder $query, string $date): Builder => $query->whereDate('published_at', '>=', $date),
                         )
                         ->when(
-                            $data['until_then'],
+                            self::date($data, 'until_then'),
                             static fn (Builder $query, string $date): Builder => $query->whereDate('until_then', '<=', $date),
                         )),
                 SelectFilter::make('location')
@@ -88,5 +88,15 @@ final class BannersTable
                 ]),
             ])
             ->defaultSort(fn (Builder $query): Builder => $query->sort());
+    }
+
+    /**
+     * @param  array<array-key, mixed>  $data
+     */
+    private static function date(array $data, string $key): ?string
+    {
+        $date = $data[$key] ?? null;
+
+        return is_string($date) && $date !== '' ? $date : null;
     }
 }

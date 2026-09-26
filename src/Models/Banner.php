@@ -21,11 +21,17 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 final class Banner extends Model implements AuditableContract
 {
     use Auditable;
+
+    /** @use HasFactory<BannerFactory> */
     use HasFactory;
+
     use Prunable;
     use SoftDeletes;
     use WithScopes;
 
+    /**
+     * @var array<string, 'asc'|'desc'>
+     */
     protected array $defaultSort = [
         'is_active' => 'desc',
         'star' => 'desc',
@@ -33,12 +39,20 @@ final class Banner extends Model implements AuditableContract
         'name' => 'asc',
     ];
 
+    /**
+     * @return Builder<self>
+     */
     public function prunable(): Builder
     {
         return self::query()
             ->where('deleted_at', '<=', today()->subDays(30));
     }
 
+    /**
+     * Ativo, já publicado e ainda dentro do prazo de exibição.
+     *
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function isActive(Builder $query): void
     {

@@ -42,12 +42,16 @@ final class BannerResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-banners.navigation_sort');
+        $navigationSort = config('filament-banners.navigation_sort');
+
+        return is_int($navigationSort) ? $navigationSort : null;
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return config('filament-banners.navigation_group');
+        $navigationGroup = config('filament-banners.navigation_group');
+
+        return is_string($navigationGroup) ? $navigationGroup : null;
     }
 
     #[Override]

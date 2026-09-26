@@ -8,6 +8,7 @@ use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithAutomaticallyResi
 use Agenciafmd\Admix\Resources\Forms\Components\VideoUploadWithDefault;
 use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
 use Agenciafmd\Banners\Enums\Meta;
+use Agenciafmd\Banners\Services\BannerService;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
@@ -49,29 +50,29 @@ final class BannerForm
                                     ImageUploadWithAutomaticallyResize::make(
                                         name: 'desktop',
                                         directory: 'banner/desktop',
-                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.width', $get('location')), 1920),
-                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.height', $get('location')), 1080),
+                                        width: static fn (Get $get): int => self::file($get, 'desktop')['width'],
+                                        height: static fn (Get $get): int => self::file($get, 'desktop')['height'],
                                     )
-                                        ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.desktop.visible', $get('location')), false))
+                                        ->visible(static fn (Get $get): bool => self::file($get, 'desktop')['visible'])
                                         ->required(),
                                     ImageUploadWithAutomaticallyResize::make(
                                         name: 'notebook',
                                         directory: 'banner/notebook',
-                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.width', $get('location')), 1440),
-                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.height', $get('location')), 810),
+                                        width: static fn (Get $get): int => self::file($get, 'notebook')['width'],
+                                        height: static fn (Get $get): int => self::file($get, 'notebook')['height'],
                                     )
-                                        ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.notebook.visible', $get('location')), false))
+                                        ->visible(static fn (Get $get): bool => self::file($get, 'notebook')['visible'])
                                         ->required(),
                                     ImageUploadWithAutomaticallyResize::make(
                                         name: 'mobile',
                                         directory: 'banner/mobile',
-                                        width: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.width', $get('location')), 1440),
-                                        height: static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.height', $get('location')), 810),
+                                        width: static fn (Get $get): int => self::file($get, 'mobile')['width'],
+                                        height: static fn (Get $get): int => self::file($get, 'mobile')['height'],
                                     )
-                                        ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.mobile.visible', $get('location')), false))
+                                        ->visible(static fn (Get $get): bool => self::file($get, 'mobile')['visible'])
                                         ->required(),
                                     VideoUploadWithDefault::make(name: 'video', directory: 'banner/video')
-                                        ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.files.video.visible', $get('location')), false)),
+                                        ->visible(static fn (Get $get): bool => self::file($get, 'video')['visible']),
                                     TextInput::make('link')
                                         ->translateLabel()
                                         ->url(),
@@ -87,13 +88,14 @@ final class BannerForm
                                 ->columnSpan(2),
                             Section::make(__('Additional fields'))
                                 ->statePath('meta')
-                                ->schema(fn (Get $get) => collect(config(sprintf('filament-banners.locations.%s.meta', $get('location')), []))
-                                    ->map(fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
+                                ->schema(static fn (Get $get): array => BannerService::make()
+                                    ->meta(self::location($get))
+                                    ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
                                         Meta::TEXT => TextInput::make($field['name'])
                                             ->label($field['label']),
                                         Meta::SELECT => Select::make($field['name'])
                                             ->label($field['label'])
-                                            ->options($field['options'] ?? []),
+                                            ->options($field['options']),
                                         Meta::REPEATER => Repeater::make($field['name'])
                                             ->label($field['label'])
                                             ->table([
@@ -107,12 +109,14 @@ final class BannerForm
                                             ->compact()
                                             ->columnSpanFull(),
                                     })
-                                    ->toArray())
+                                    ->all())
                                 ->collapsible()
                                 ->columns()
                                 ->columnSpan(2)
                                 ->live()
-                                ->visible(static fn (Get $get) => config(sprintf('filament-banners.locations.%s.meta', $get('location')), false)),
+                                ->visible(static fn (Get $get): bool => BannerService::make()
+                                    ->meta(self::location($get))
+                                    ->isNotEmpty()),
                         ])
                             ->columnSpan(2),
                         Group::make([
@@ -132,7 +136,7 @@ final class BannerForm
                                     DateTimeEntry::make('updated_at'),
                                     TextEntry::make('location')
                                         ->translateLabel()
-                                        ->formatStateUsing(static fn (string $state) => config(sprintf('filament-banners.locations.%s.label', $state)))
+                                        ->formatStateUsing(static fn (string $state): string => BannerService::make()->locations()->get($state, $state))
                                         ->hiddenOn(Operation::Create),
                                 ])
                                 ->collapsible()
@@ -141,5 +145,20 @@ final class BannerForm
                     ])
                     ->columnSpanFull(),
             ]);
+    }
+
+    private static function location(Get $get): string
+    {
+        $location = $get('location');
+
+        return is_string($location) ? $location : '';
+    }
+
+    /**
+     * @return array{visible: bool, width: int, height: int, media: string}
+     */
+    private static function file(Get $get, string $name): array
+    {
+        return BannerService::make()->file(self::location($get), $name);
     }
 }

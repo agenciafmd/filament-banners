@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Agenciafmd\Banners\Resources\Banners\Pages;
 
 use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
+use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Banners\Resources\Banners\BannerResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
@@ -18,6 +19,9 @@ final class EditBanner extends EditRecord
 
     protected static string $resource = BannerResource::class;
 
+    /**
+     * @var array<int, string>
+     */
     protected $listeners = [
         'auditRestored',
     ];
@@ -25,7 +29,9 @@ final class EditBanner extends EditRecord
     #[Override]
     public function getRelationManagers(): array
     {
-        if ($this->record->trashed()) {
+        $record = $this->getRecord();
+
+        if ($record instanceof Banner && $record->trashed()) {
             return [];
         }
 

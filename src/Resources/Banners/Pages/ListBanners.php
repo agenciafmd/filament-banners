@@ -26,7 +26,7 @@ final class ListBanners extends ListRecords
                         ->translateLabel()
                         ->options(BannerService::make()
                             ->locations()
-                            ->toArray())
+                            ->all())
                         ->required(),
                 ])
                 ->action(fn (array $data) => redirect()->to(
