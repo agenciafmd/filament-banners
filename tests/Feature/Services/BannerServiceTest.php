@@ -9,7 +9,7 @@ use Agenciafmd\Banners\Services\BannerService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('lists the locations with their labels', function (): void {
     config()->set('filament-banners.locations', [

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 use function Pest\Laravel\travelTo;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('keeps only the active banners inside the display period', function (): void {
     Storage::fake();

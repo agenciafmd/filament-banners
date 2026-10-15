@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 use function Pest\Laravel\actingAs;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('resizes each image to the dimensions configured for the location', function (): void {
     config()->set('filament-banners.locations.home.files.desktop.width', 1600);
