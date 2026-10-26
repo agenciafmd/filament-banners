@@ -58,3 +58,18 @@ it('upscales and crops a smaller image with a different aspect ratio to the exac
     expect($path)->toEndWith('.jpg')
         ->and([$width, $height])->toBe([1600, 900]);
 });
+
+it('shows mobile_video field only when configured as visible', function (): void {
+    actingAs(User::factory()->create()->fresh(), 'admix-web');
+    Filament::setCurrentPanel('admix');
+
+    config()->set('filament-banners.locations.home.files.mobile_video.visible', false);
+
+    Livewire::test(CreateBanner::class)
+        ->assertFormFieldDoesNotExist('mobile_video');
+
+    config()->set('filament-banners.locations.home.files.mobile_video.visible', true);
+
+    Livewire::test(CreateBanner::class)
+        ->assertFormFieldExists('mobile_video');
+});

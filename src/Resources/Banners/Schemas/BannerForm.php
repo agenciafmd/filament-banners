@@ -73,15 +73,22 @@ final class BannerForm
                                         ->required(),
                                     VideoUploadWithDefault::make(name: 'video', directory: 'banner/video')
                                         ->visible(static fn (Get $get): bool => self::file($get, 'video')['visible']),
-                                    TextInput::make('link')
-                                        ->translateLabel()
-                                        ->url(),
-                                    Select::make('target')
-                                        ->translateLabel()
-                                        ->options([
-                                            '_self' => __('_self'),
-                                            '_blank' => __('_blank'),
-                                        ]),
+                                    VideoUploadWithDefault::make(name: 'mobile_video', directory: 'banner/video')
+                                        ->columnSpan(1)
+                                        ->visible(static fn (Get $get): bool => self::file($get, 'mobile_video')['visible']),
+                                    Grid::make()
+                                        ->schema([
+                                            TextInput::make('link')
+                                                ->translateLabel()
+                                                ->url(),
+                                            Select::make('target')
+                                                ->translateLabel()
+                                                ->options([
+                                                    '_self' => __('_self'),
+                                                    '_blank' => __('_blank'),
+                                                ]),
+                                        ])
+                                        ->columnSpanFull(),
                                 ])
                                 ->collapsible()
                                 ->columns()

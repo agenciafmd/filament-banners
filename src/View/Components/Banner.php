@@ -42,6 +42,7 @@ final class Banner extends Component
         $view['banners'] = $banners->map(static function (BannerModel $banner) use ($files): array {
             $responsiveImages = [];
             $video = null;
+            $mobileVideo = null;
 
             foreach ($files as $fileKey => $file) {
                 $path = $banner->getAttribute($fileKey);
@@ -57,6 +58,12 @@ final class Banner extends Component
                     continue;
                 }
 
+                if ($fileKey === 'mobile_video') {
+                    $mobileVideo = $media;
+
+                    continue;
+                }
+
                 $responsiveImages[$file['media']] = $media;
             }
 
@@ -67,6 +74,7 @@ final class Banner extends Component
                 'target' => $banner->target,
                 'images' => $responsiveImages,
                 'video' => $video,
+                'mobile_video' => $mobileVideo,
             ];
         });
 

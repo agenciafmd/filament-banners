@@ -31,6 +31,9 @@ return [
                 'video' => [
                     'visible' => false,
                 ],
+                'mobile_video' => [
+                    'visible' => false,
+                ],
             ],
             'meta' => [
                 //                [

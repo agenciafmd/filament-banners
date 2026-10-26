@@ -98,6 +98,9 @@ return [
                 'video' => [
                     'visible' => false,
                 ],
+                'mobile_video' => [
+                    'visible' => false,
+                ],
             ],
             'meta' => [
                 [
@@ -131,6 +134,7 @@ return [
 | `locations.*.files.{desktop,notebook,mobile}.width` / `height` | ver acima | Dimensões do crop da imagem. |
 | `locations.*.files.{desktop,notebook,mobile}.media` | ver acima | Media query usada no `<source>` da imagem responsiva. |
 | `locations.*.files.video.visible` | `false` | Exibe o campo de vídeo no formulário. |
+| `locations.*.files.mobile_video.visible` | `false` | Exibe o campo de vídeo mobile no formulário. |
 | `locations.*.meta` | `[]` | Campos adicionais da localização (veja abaixo). |
 
 ### Campos adicionais (meta)
@@ -160,7 +164,7 @@ O pacote registra o componente Blade `<x-banner>`:
 | `random` | `false` | Ordem aleatória; quando `false`, usa a ordenação padrão do model. |
 | `template` | `filament-banners::components.home` | View usada para renderizar os banners. |
 
-Somente banners ativos da localização são exibidos. A view recebe `$banners`, em que cada item tem `name`, `meta`, `link`, `target`, `images` (media query => URL) e `video` (URL ou `null`):
+Somente banners ativos da localização são exibidos. A view recebe `$banners`, em que cada item tem `name`, `meta`, `link`, `target`, `images` (media query => URL), `video` (URL ou `null`) e `mobile_video` (URL ou `null`):
 
 ```blade
 @foreach ($banners as $banner)
