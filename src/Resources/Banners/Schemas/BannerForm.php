@@ -34,6 +34,7 @@ final class BannerForm
                     ->schema([
                         Group::make([
                             Section::make(__('General'))
+                                ->key('general')
                                 ->schema([
                                     Hidden::make('location'),
                                     TextInput::make('name')
@@ -94,29 +95,34 @@ final class BannerForm
                                 ->columns()
                                 ->columnSpan(2),
                             Section::make(__('Additional fields'))
+                                ->key('additionalFields')
                                 ->statePath('meta')
-                                ->schema(static fn (Get $get): array => BannerService::make()
-                                    ->meta(self::location($get))
-                                    ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
-                                        Meta::TEXT => TextInput::make($field['name'])
-                                            ->label($field['label']),
-                                        Meta::SELECT => Select::make($field['name'])
-                                            ->label($field['label'])
-                                            ->options($field['options']),
-                                        Meta::REPEATER => Repeater::make($field['name'])
-                                            ->label($field['label'])
-                                            ->table([
-                                                TableColumn::make($field['label']),
-                                            ])
-                                            ->schema([
-                                                TextInput::make('name')
+                                ->schema(
+                                    Schema::make()
+                                        ->components(static fn (Get $get): array => BannerService::make()
+                                            ->meta(self::location($get))
+                                            ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
+                                                Meta::TEXT => TextInput::make($field['name'])
+                                                    ->label($field['label']),
+                                                Meta::SELECT => Select::make($field['name'])
                                                     ->label($field['label'])
-                                                    ->required(),
-                                            ])
-                                            ->compact()
-                                            ->columnSpanFull(),
-                                    })
-                                    ->all())
+                                                    ->options($field['options']),
+                                                Meta::REPEATER => Repeater::make($field['name'])
+                                                    ->label($field['label'])
+                                                    ->table([
+                                                        TableColumn::make($field['label']),
+                                                    ])
+                                                    ->schema([
+                                                        TextInput::make('name')
+                                                            ->label($field['label'])
+                                                            ->required(),
+                                                    ])
+                                                    ->compact()
+                                                    ->columnSpanFull(),
+                                            })
+                                            ->all())
+                                        ->lazyLoaded(),
+                                )
                                 ->collapsible()
                                 ->columns()
                                 ->columnSpan(2)
@@ -128,6 +134,7 @@ final class BannerForm
                             ->columnSpan(2),
                         Group::make([
                             Section::make(__('Information'))
+                                ->key('information')
                                 ->schema([
                                     Toggle::make('is_active')
                                         ->translateLabel()
