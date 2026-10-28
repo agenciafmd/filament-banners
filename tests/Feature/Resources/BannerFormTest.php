@@ -27,7 +27,7 @@ it('resizes each image to the dimensions configured for the location', function 
     Filament::setCurrentPanel('admix');
 
     Livewire::test(CreateBanner::class)
-        ->assertFormFieldExists('desktop', static fn (FileUpload $field): bool => $field->getAutomaticallyResizeImagesWidth() === '1600'
+        ->assertFormFieldExists('general.desktop', static fn (FileUpload $field): bool => $field->getAutomaticallyResizeImagesWidth() === '1600'
             && $field->getAutomaticallyResizeImagesHeight() === '900')
         ->assertSee('Max. 1600x900');
 });
@@ -66,10 +66,10 @@ it('shows mobile_video field only when configured as visible', function (): void
     config()->set('filament-banners.locations.home.files.mobile_video.visible', false);
 
     Livewire::test(CreateBanner::class)
-        ->assertFormFieldDoesNotExist('mobile_video');
+        ->assertFormFieldDoesNotExist('general.mobile_video');
 
     config()->set('filament-banners.locations.home.files.mobile_video.visible', true);
 
     Livewire::test(CreateBanner::class)
-        ->assertFormFieldExists('mobile_video');
+        ->assertFormFieldExists('general.mobile_video');
 });

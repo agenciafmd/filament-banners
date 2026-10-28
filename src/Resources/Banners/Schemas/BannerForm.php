@@ -97,32 +97,30 @@ final class BannerForm
                             Section::make(__('Additional fields'))
                                 ->key('additionalFields')
                                 ->statePath('meta')
-                                ->schema(
-                                    Schema::make()
-                                        ->components(static fn (Get $get): array => BannerService::make()
-                                            ->meta(self::location($get))
-                                            ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
-                                                Meta::TEXT => TextInput::make($field['name'])
-                                                    ->label($field['label']),
-                                                Meta::SELECT => Select::make($field['name'])
-                                                    ->label($field['label'])
-                                                    ->options($field['options']),
-                                                Meta::REPEATER => Repeater::make($field['name'])
-                                                    ->label($field['label'])
-                                                    ->table([
-                                                        TableColumn::make($field['label']),
-                                                    ])
-                                                    ->schema([
-                                                        TextInput::make('name')
-                                                            ->label($field['label'])
-                                                            ->required(),
-                                                    ])
-                                                    ->compact()
-                                                    ->columnSpanFull(),
-                                            })
-                                            ->all())
-                                        ->lazyLoaded(),
-                                )
+                                ->schema(static fn (Get $get): Schema => Schema::make()
+                                    ->components(BannerService::make()
+                                        ->meta(self::location($get))
+                                        ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
+                                            Meta::TEXT => TextInput::make($field['name'])
+                                                ->label($field['label']),
+                                            Meta::SELECT => Select::make($field['name'])
+                                                ->label($field['label'])
+                                                ->options($field['options']),
+                                            Meta::REPEATER => Repeater::make($field['name'])
+                                                ->label($field['label'])
+                                                ->table([
+                                                    TableColumn::make($field['label']),
+                                                ])
+                                                ->schema([
+                                                    TextInput::make('name')
+                                                        ->label($field['label'])
+                                                        ->required(),
+                                                ])
+                                                ->compact()
+                                                ->columnSpanFull(),
+                                        })
+                                        ->all())
+                                    ->lazyLoaded())
                                 ->collapsible()
                                 ->columns()
                                 ->columnSpan(2)
