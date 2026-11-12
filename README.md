@@ -104,12 +104,12 @@ return [
             ],
             'meta' => [
                 [
-                    'type' => Meta::TEXT,
+                    'type' => Meta::Text,
                     'label' => 'Título',
                     'name' => 'title',
                 ],
                 [
-                    'type' => Meta::SELECT,
+                    'type' => Meta::Select,
                     'label' => 'Status',
                     'name' => 'status',
                     'options' => [
@@ -141,9 +141,9 @@ return [
 
 Os tipos suportados estão no enum `Agenciafmd\Banners\Enums\Meta`:
 
-- `Meta::TEXT`
-- `Meta::SELECT` (usa a chave `options`, no formato `valor => rótulo`)
-- `Meta::REPEATER`
+- `Meta::Text`
+- `Meta::Select` (usa a chave `options`, no formato `valor => rótulo`)
+- `Meta::Repeater`
 
 Campos com `type` inválido são ignorados. Os valores ficam disponíveis na chave `meta` de cada banner entregue à view.
 

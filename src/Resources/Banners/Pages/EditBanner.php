@@ -17,11 +17,13 @@ final class EditBanner extends EditRecord
 {
     use RedirectBack;
 
+    #[Override]
     protected static string $resource = BannerResource::class;
 
     /**
      * @var array<int, string>
      */
+    #[Override]
     protected $listeners = [
         'auditRestored',
     ];

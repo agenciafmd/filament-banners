@@ -37,22 +37,22 @@ return [
             ],
             'meta' => [
                 //                [
-                //                    'type' => Meta::TEXT,
+                //                    'type' => Meta::Text,
                 //                    'label' => 'Título',
                 //                    'name' => 'title',
                 //                ],
                 //                [
-                //                    'type' => Meta::TEXT,
+                //                    'type' => Meta::Text,
                 //                    'label' => 'Subtítulo',
                 //                    'name' => 'subtitle',
                 //                ],
                 //                [
-                //                    'type' => Meta::TEXT,
+                //                    'type' => Meta::Text,
                 //                    'label' => 'Descrição',
                 //                    'name' => 'description',
                 //                ],
                 //                [
-                //                    'type' => Meta::SELECT,
+                //                    'type' => Meta::Select,
                 //                    'label' => 'Status',
                 //                    'name' => 'status',
                 //                    'options' => [
@@ -62,7 +62,7 @@ return [
                 //                    ],
                 //                ],
                 //                [
-                //                    'type' => Meta::REPEATER,
+                //                    'type' => Meta::Repeater,
                 //                    'label' => 'Detalhes',
                 //                    'name' => 'details',
                 //                ],

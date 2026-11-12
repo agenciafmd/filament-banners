@@ -22,10 +22,13 @@ use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 final class BannerResource extends Resource
 {
+    #[Override]
     protected static ?string $model = Banner::class;
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedComputerDesktop;
 
+    #[Override]
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]

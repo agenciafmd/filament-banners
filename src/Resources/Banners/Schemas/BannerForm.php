@@ -101,12 +101,12 @@ final class BannerForm
                                     ->components(BannerService::make()
                                         ->meta(self::location($get))
                                         ->map(static fn (array $field): TextInput|Select|Repeater => match ($field['type']) {
-                                            Meta::TEXT => TextInput::make($field['name'])
+                                            Meta::Text => TextInput::make($field['name'])
                                                 ->label($field['label']),
-                                            Meta::SELECT => Select::make($field['name'])
+                                            Meta::Select => Select::make($field['name'])
                                                 ->label($field['label'])
                                                 ->options($field['options']),
-                                            Meta::REPEATER => Repeater::make($field['name'])
+                                            Meta::Repeater => Repeater::make($field['name'])
                                                 ->label($field['label'])
                                                 ->table([
                                                     TableColumn::make($field['label']),

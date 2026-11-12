@@ -45,13 +45,13 @@ it('treats a file missing from the config as hidden', function (): void {
 
 it('ignores the meta fields with an unknown type', function (): void {
     config()->set('filament-banners.locations.home.meta', [
-        ['type' => Meta::TEXT, 'label' => 'Título', 'name' => 'title'],
+        ['type' => Meta::Text, 'label' => 'Título', 'name' => 'title'],
         ['type' => 'text', 'label' => 'Inválido', 'name' => 'invalid'],
-        ['type' => Meta::SELECT, 'label' => 'Status', 'name' => 'status', 'options' => ['pronto' => 'Pronto']],
+        ['type' => Meta::Select, 'label' => 'Status', 'name' => 'status', 'options' => ['pronto' => 'Pronto']],
     ]);
 
     expect(BannerService::make()->meta('home')->all())->toBe([
-        ['type' => Meta::TEXT, 'name' => 'title', 'label' => 'Título', 'options' => []],
-        ['type' => Meta::SELECT, 'name' => 'status', 'label' => 'Status', 'options' => ['pronto' => 'Pronto']],
+        ['type' => Meta::Text, 'name' => 'title', 'label' => 'Título', 'options' => []],
+        ['type' => Meta::Select, 'name' => 'status', 'label' => 'Status', 'options' => ['pronto' => 'Pronto']],
     ]);
 });

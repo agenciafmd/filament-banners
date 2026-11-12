@@ -6,7 +6,7 @@ namespace Agenciafmd\Banners\Enums;
 
 enum Meta: string
 {
-    case TEXT = 'text';
-    case SELECT = 'select';
-    case REPEATER = 'repeater';
+    case Text = 'text';
+    case Select = 'select';
+    case Repeater = 'repeater';
 }

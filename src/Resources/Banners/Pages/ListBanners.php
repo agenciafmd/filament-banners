@@ -13,6 +13,7 @@ use Override;
 
 final class ListBanners extends ListRecords
 {
+    #[Override]
     protected static string $resource = BannerResource::class;
 
     #[Override]

@@ -13,6 +13,7 @@ final class CreateBanner extends CreateRecord
 {
     use RedirectBack;
 
+    #[Override]
     protected static string $resource = BannerResource::class;
 
     #[Override]

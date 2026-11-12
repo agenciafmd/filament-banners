@@ -9,12 +9,14 @@ use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Banners\Services\BannerService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
+use Override;
 
 /**
  * @extends Factory<Banner>
  */
 final class BannerFactory extends Factory
 {
+    #[Override]
     protected $model = Banner::class;
 
     public function definition(): array
@@ -61,9 +63,9 @@ final class BannerFactory extends Factory
             ->meta($location)
             ->mapWithKeys(static fn (array $field): array => [
                 $field['name'] => match ($field['type']) {
-                    Meta::TEXT => fake()->sentence(),
-                    Meta::SELECT => fake()->randomElement(array_keys($field['options'])),
-                    Meta::REPEATER => collect(range(1, fake()->numberBetween(1, 3)))
+                    Meta::Text => fake()->sentence(),
+                    Meta::Select => fake()->randomElement(array_keys($field['options'])),
+                    Meta::Repeater => collect(range(1, fake()->numberBetween(1, 3)))
                         ->map(static fn (): array => [
                             'name' => fake()->word(),
                         ])
