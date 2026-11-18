@@ -74,7 +74,7 @@ final class BannerForm
                                         ->required(),
                                     VideoUploadWithDefault::make(name: 'video', directory: 'banner/video')
                                         ->visible(static fn (Get $get): bool => self::file($get, 'video')['visible']),
-                                    VideoUploadWithDefault::make(name: 'mobile_video', directory: 'banner/video')
+                                    VideoUploadWithDefault::make(name: 'mobile_video', directory: 'banner/mobile_video')
                                         ->columnSpan(1)
                                         ->visible(static fn (Get $get): bool => self::file($get, 'mobile_video')['visible']),
                                     Grid::make()
